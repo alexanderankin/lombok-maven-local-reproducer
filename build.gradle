@@ -6,11 +6,17 @@ group 'org.example'
 version '1.0-SNAPSHOT'
 
 final boolean useLocal = true
+final boolean use3264 = true
 String lombok
 
 if (useLocal) {
-    repositories.mavenLocal()
-    lombok = 'org.projectlombok:lombok:1.18.25'
+    if (use3264) {
+        repositories.mavenLocal()
+        lombok = 'org.projectlombok:lombok:jdk19-20221010'
+    } else {
+        repositories.mavenLocal()
+        lombok = 'org.projectlombok:lombok:1.18.25'
+    }
 
 } else {
     repositories.mavenCentral()
@@ -25,4 +31,9 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+tasks.register('run', JavaExec) {
+    mainClass.set 'org.example.Main'
+    classpath = sourceSets.main.runtimeClasspath
 }
