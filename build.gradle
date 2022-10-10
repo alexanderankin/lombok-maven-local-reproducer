@@ -5,13 +5,22 @@ plugins {
 group 'org.example'
 version '1.0-SNAPSHOT'
 
-repositories {
-    mavenCentral()
+final boolean useLocal = true
+String lombok
+
+if (useLocal) {
+    repositories.mavenLocal()
+    lombok = 'org.projectlombok:lombok:1.18.25'
+
+} else {
+    repositories.mavenCentral()
+    lombok = 'org.projectlombok:lombok:1.18.24'
 }
 
+
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    annotationProcessor lombok
+    compileOnly lombok
 }
 
 test {
